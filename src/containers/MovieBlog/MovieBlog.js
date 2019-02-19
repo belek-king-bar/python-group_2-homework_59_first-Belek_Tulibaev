@@ -1,100 +1,99 @@
 import React, { Component } from 'react';
-import AddTaskForm from '../../components/AddTaskForm/AddTaskForm.js'
-import Task from '../../components/Task/Task.js';
+import AddMovieForm from '../../components/AddTaskForm/AddMovieForm.js'
+import Movie from '../../components/Movie/Movie.js';
 
 
 class MovieBlog extends Component {
 
   state = {
-        tasks: [
-            {id: 1, text: 'Написать код', status: false},
-            {id: 2, text: 'Поспать час', status: false},
-            {id: 3, text: 'Покушать', status: false}
+        movies: [
+            {id: 1, text: 'Интерстеллар'},
+            {id: 2, text: 'Начало'},
+            {id: 3, text: 'Остров проклятых'}
         ],
-        currentTask: {id: '', text: '', status: false},
+        currentMovie: {id: '', text: ''},
 
     };
 
 
-  addTask = (event) => {
+  addMovie = (event) => {
         event.preventDefault();
 
-        let task = {...this.state.currentTask};
+        let movie = {...this.state.currentMovie};
         const now = new Date();
-        task.id = now.getTime();
-        let tasks = [...this.state.tasks, task];
+        movie.id = now.getTime();
+        let movies = [...this.state.movies, movie];
         this.setState({
             ...this.state,
-            tasks,
-            currentTask: {id: '', text: '', status: false}
+            movies: movies,
+            currentMovie: {id: '', text: ''}
         });
-        console.log(this.state.currentTask)
+        console.log(this.state.currentMovie)
     };
 
-  removeTask = (id) => {
-        let taskId = this.state.tasks.findIndex(task => {
-            return task.id === id;
+  removeMovie = (id) => {
+        let movieId = this.state.movies.findIndex(movie => {
+            return movie.id === id;
         });
 
-        const tasks = [...this.state.tasks];
-        tasks.splice(taskId, 1);
+        const movies = [...this.state.movies];
+        movies.splice(movieId, 1);
 
         this.setState({
             ...this.state,
-            tasks
+            movies: movies
         });
     };
 
-  changeTaskInput = (event) => {
+  changeMovieInput = (event) => {
         let value = event.target.value;
-        let currentTask = {
-            ...this.state.currentTask,
+        let currentMovie = {
+            ...this.state.currentMovie,
             text: value
         };
         this.setState({
             ...this.state,
-            currentTask
+            currentMovie
+        });
+    };
+
+   onChangeMovie = (event) => {
+        let value = event.target.value;
+        let currentMovie = {
+            ...this.state.movies,
+            text: value
+        };
+        this.setState({
+            ...this.state,
+            currentMovie
         });
     };
 
 
   isAddButtonDisabled = () => {
-       return this.state.currentTask.text === '';
+       return this.state.currentMovie.text === '';
     };
-
-  isDone = (id) => {
-      let taskId = this.state.tasks.findIndex(task => {
-          return task.id === id
-      });
-
-      const tasks = [...this.state.tasks];
-      tasks[taskId].status = !this.state.tasks[taskId].status;
-
-      this.setState({tasks});
-  };
 
 
   render() {
     return (
             <div>
                 <div>
-                    <h2>Добавить задачу</h2>
-                    <AddTaskForm
-                        onChangeInput={this.changeTaskInput}
-                        onAddTask={this.addTask}
+                    <h2>Добавить фильм</h2>
+                    <AddMovieForm
+                        onChangeInput={this.changeMovieInput}
+                        onAddMovie={this.addMovie}
                         isAddButtonDisabled={this.isAddButtonDisabled()}
                     />
                 </div>
                 <div>
 
-                  {this.state.tasks.map((task) => {
-                      return <Task
-                          key={task.id}
-                          tasks={task.text}
-                          onDelete={() => this.removeTask(task.id)}
-                          isTaskDone={() => this.isDone(task.id)}
-                          status = {task.status}
-                          id={task.id}
+                  {this.state.movies.map((movie) => {
+                      return <Movie
+                          key={movie.id}
+                          movies={movie.text}
+                          onChangeInput={this.onChangeMovie}
+                          onDelete={() => this.removeMovie(movie.id)}
                       />
                   })}
 
