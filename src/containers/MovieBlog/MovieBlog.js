@@ -57,10 +57,11 @@ class MovieBlog extends Component {
         });
     };
 
-   onChangeMovie = (event) => {
+   onChangeMovie = (event, id) => {
+        let index = this.state.movies.findIndex(item => item.id === id);
         let value = event.target.value;
         let currentMovie = {
-            ...this.state.movies,
+            ...this.state.movies[index],
             text: value
         };
         this.setState({
