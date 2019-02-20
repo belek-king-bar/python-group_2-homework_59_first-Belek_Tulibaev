@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AddMovieForm from '../../components/AddTaskForm/AddMovieForm.js'
+import AddMovieForm from '../../components/AddMovieForm/AddMovieForm.js'
 import Movie from '../../components/Movie/Movie.js';
 
 
